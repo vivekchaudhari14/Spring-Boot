@@ -25,4 +25,10 @@ public class BookService {
 	public List<Book> getAllBook(){
 		return list;
 	}
+
+	public Book getBook(int bId) {
+		Book book = null;
+		book = list.stream().filter(e->e.getId() == bId).findFirst().get();
+		return book;
+	}
 }
