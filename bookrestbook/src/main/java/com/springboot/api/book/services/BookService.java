@@ -31,4 +31,9 @@ public class BookService {
 		book = list.stream().filter(e->e.getId() == bId).findFirst().get();
 		return book;
 	}
+
+	public Book addBook(Book book) {
+		list.add(book);
+		return book;
+	}
 }
