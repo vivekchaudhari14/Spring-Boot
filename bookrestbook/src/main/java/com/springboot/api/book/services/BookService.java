@@ -12,10 +12,18 @@ public class BookService {
 	private static List<Book> list = new ArrayList<>();
 	
 	static {
+<<<<<<< HEAD
 		list.add(new Book(1,"java","james gosling"));
 		list.add(new Book(1,"java","james gosling"));
 		list.add(new Book(1,"java","james gosling"));
 		list.add(new Book(1,"java","james gosling"));
+=======
+		list.removeAll(list);
+		list.add(new Book(1,"Java","abc"));
+		list.add(new Book(2,"Python","def"));
+		list.add(new Book(3,"Javascript","xyz"));
+		list.add(new Book(4,"Golang","mno"));
+>>>>>>> 8e9ed04 (getAllBookHelper Working)
 		
 	}
 	
