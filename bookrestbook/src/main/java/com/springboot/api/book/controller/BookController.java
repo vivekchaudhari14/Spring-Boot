@@ -11,5 +11,11 @@ import com.springboot.api.book.services.BookService;
 @RestController
 public class BookController {
 	
+	@Autowired
+	private BookService bookService;
 	
+	@GetMapping("/books")
+	public List<Book> getAllBookHelper(){
+		return this.bookService.getAllBook();
+	}
 }
