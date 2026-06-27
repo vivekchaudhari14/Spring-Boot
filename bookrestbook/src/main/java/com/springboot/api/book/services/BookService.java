@@ -3,6 +3,8 @@ package com.springboot.api.book.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Component;
 
 import com.springboot.api.book.entities.Book;
@@ -23,38 +25,50 @@ public class BookService {
 	// get All Student 
 	
 	public List<Book> getAllBook(){
+		if(list.isEmpty()) {
+			throw new RuntimeException("Book Not Found");
+		}
 		return list;
 	}
 
 	public Book getBook(int bId) {
 		Book book = null;
 		book = list.stream().filter(e->e.getId() == bId).findFirst().get();
+		if(book == null) {
+			throw new RuntimeException("Book Id Not found");
+		}
 		return book;
 	}
 
 	public Book addBook(Book book) {
+		
+		if (book.getTitle() == null || book.getTitle().isBlank()) {
+	        throw new RuntimeException("Title cannot be null");
+	    }
+		if (book.getId()<=0) {
+	        throw new RuntimeException("Id cannot be null");
+	    }
+		if (book.getAuthor() == null || book.getAuthor().isBlank()) {
+	        throw new RuntimeException("Author cannot be null");
+	    }
+		
 		list.add(book);
 		return book;
 	}
 
-	public void deleteBook(int bId) {
-		
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getId() == bId) {
-				list.remove(i);
-			}
-		}
-		
+	public boolean deleteBook(int bId) {
+		 return list.removeIf(book -> book.getId() == bId);
 	}
 
-	public Book updateBook(Book book, int bookId) {
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getId() == bookId) {
-				list.set(i, book);
-				return book;
-			}
-			
-		}
-		return null;
+	public boolean updateBook(Book book, int bookId) {
+		 for (Book b : list) {
+		        if (b.getId() == bookId) {
+		            b.setTitle(book.getTitle());
+		            b.setAuthor(book.getAuthor());
+		            return true;
+		        }
+		    }
+
+		    return false;
 	}
 }
