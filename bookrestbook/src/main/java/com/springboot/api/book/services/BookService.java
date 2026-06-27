@@ -1,74 +1,84 @@
 package com.springboot.api.book.services;
 
-import java.util.ArrayList;
+import com.springboot.api.book.BookrestbookApplication;
 import java.util.List;
+import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.springboot.api.book.dao.BookRepository;
 import com.springboot.api.book.entities.Book;
 
-@Component
+@Service
 public class BookService {
-	private static List<Book> list = new ArrayList<>();
 	
-	static {
-		
-		list.add(new Book(1,"Java","abc"));
-		list.add(new Book(2,"Python","def"));
-		list.add(new Book(3,"Javascript","xyz"));
-		list.add(new Book(4,"Golang","mno"));
-		
-	}
+	@Autowired
+	private BookRepository bookRepository;
+	
 	
 	// get All Student 
 	
 	public List<Book> getAllBook(){
-		if(list.isEmpty()) {
-			throw new RuntimeException("Book Not Found");
+		
+		List<Book> book = (List<Book>) this.bookRepository.findAll();
+		
+		if(book.isEmpty()) {
+			throw new RuntimeException("Table Of Book is Empty");
 		}
-		return list;
-	}
-
-	public Book getBook(int bId) {
-		Book book = null;
-		book = list.stream().filter(e->e.getId() == bId).findFirst().get();
-		if(book == null) {
-			throw new RuntimeException("Book Id Not found");
-		}
+		
 		return book;
 	}
 
+	public Book getBook(int bId) {
+
+	    Optional<Book> book = bookRepository.findById(bId);
+
+	    if (book.isPresent()) {
+	        return book.get();
+	    } else {
+	        throw new RuntimeException("Id not found");
+	    }
+	}
+	
 	public Book addBook(Book book) {
 		
 		if (book.getTitle() == null || book.getTitle().isBlank()) {
 	        throw new RuntimeException("Title cannot be null");
 	    }
-		if (book.getId()<=0) {
-	        throw new RuntimeException("Id cannot be null");
-	    }
 		if (book.getAuthor() == null || book.getAuthor().isBlank()) {
 	        throw new RuntimeException("Author cannot be null");
 	    }
 		
-		list.add(book);
-		return book;
+		Book b = this.bookRepository.save(book);
+		return b;
+	
 	}
 
-	public boolean deleteBook(int bId) {
-		 return list.removeIf(book -> book.getId() == bId);
-	}
-
-	public boolean updateBook(Book book, int bookId) {
-		 for (Book b : list) {
-		        if (b.getId() == bookId) {
-		            b.setTitle(book.getTitle());
-		            b.setAuthor(book.getAuthor());
-		            return true;
-		        }
+	public void deleteBook(int bId) {
+		 if (!bookRepository.existsById(bId)) {
+		        throw new RuntimeException("Book not found");
 		    }
 
-		    return false;
+		    bookRepository.deleteById(bId);
+	}
+
+	public Book updateBook(Book book, int bookId) {
+
+	    Optional<Book> existingBook = bookRepository.findById(bookId);
+
+	    if (existingBook.isPresent()) {
+
+	        Book b = existingBook.get();
+
+	        b.setTitle(book.getTitle());
+	        b.setAuthor(book.getAuthor());
+
+	        return bookRepository.save(b);
+
+	    } else {
+	        throw new RuntimeException("Id Not found");
+	    }
 	}
 }

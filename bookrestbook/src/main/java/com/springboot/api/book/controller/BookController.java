@@ -46,29 +46,36 @@ public class BookController {
 	
 	@PostMapping("/books")
 	public ResponseEntity<?> addBookHelper(@RequestBody Book book) {
+		 try {
+		        Book savedBook = bookService.addBook(book);
+		        return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
+		    } catch (RuntimeException e) {
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		    }
+	}
+	
+	@DeleteMapping("/books/{bookId}")
+	public ResponseEntity<?> deleteBookHelper(@PathVariable("bookId") int bId) {
 		try {
-			return ResponseEntity.ok(bookService.addBook(book));
+			this.bookService.deleteBook(bId);
+			return ResponseEntity.ok("Book Deleted");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id Not found");
+		}
+			
+	
+	}
+	
+	@PutMapping("/books/{bookId}")
+	public ResponseEntity<?> bookUpdateHelper(@RequestBody Book book,@PathVariable("bookId") int bookId) {
+		
+		try {
+			Book updated = bookService.updateBook(book, bookId);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(updated);
+		
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
 		
-	}
-	
-	@DeleteMapping("/books/{bookId}")
-	public ResponseEntity deleteBookHelper(@PathVariable("bookId") int bId) {
-		if(this.bookService.deleteBook(bId)) {
-			return ResponseEntity.ok("Book Deleted");
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id Not found");
-	}
-	
-	@PutMapping("/books/{bookId}")
-	public ResponseEntity bookUpdateHelper(@RequestBody Book book,@PathVariable("bookId") int bookid) {
-		boolean updated = bookService.updateBook(book, bookid);
-		if(updated) {
-			return ResponseEntity.ok("Book Updated");
-		}
-		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id Not Match");
 	}
 }
