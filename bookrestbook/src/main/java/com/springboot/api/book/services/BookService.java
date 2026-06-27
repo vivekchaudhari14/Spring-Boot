@@ -36,4 +36,25 @@ public class BookService {
 		list.add(book);
 		return book;
 	}
+
+	public void deleteBook(int bId) {
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getId() == bId) {
+				list.remove(i);
+			}
+		}
+		
+	}
+
+	public Book updateBook(Book book, int bookId) {
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getId() == bookId) {
+				list.set(i, book);
+				return book;
+			}
+			
+		}
+		return null;
+	}
 }
