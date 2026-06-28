@@ -36,17 +36,34 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileUploadHelper {
 
-	public static final String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/Images";
+	//public static final String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/Images";
 
-    public boolean uploadFile(MultipartFile multiPartFile) throws IOException {
+	//public static final String UPLOAD_DIR; //= new  ClassPathResource("static/image/").getFile().getAbsolutePath();
+	
+	
+	private final String UPLOAD_DIR;
+
+    public FileUploadHelper() throws IOException {
+        this.UPLOAD_DIR = new ClassPathResource("static/Images")
+                .getFile()
+                .getAbsolutePath();
+
+        System.out.println("Upload Path : " + UPLOAD_DIR);
+    }
+
+
+	public boolean uploadFile(MultipartFile multiPartFile) throws IOException {
 
        
+    	
         File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
