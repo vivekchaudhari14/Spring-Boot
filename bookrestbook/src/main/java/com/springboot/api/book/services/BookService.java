@@ -1,13 +1,9 @@
 package com.springboot.api.book.services;
 
-import com.springboot.api.book.BookrestbookApplication;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import com.springboot.api.book.dao.BookRepository;
 import com.springboot.api.book.entities.Book;
 
@@ -25,7 +21,7 @@ public class BookService {
 		List<Book> book = (List<Book>) this.bookRepository.findAll();
 		
 		if(book.isEmpty()) {
-			throw new RuntimeException("Table Of Book is Empty");
+			throw new RuntimeException("Book of Table is Empty");
 		}
 		
 		return book;
@@ -44,12 +40,12 @@ public class BookService {
 	
 	public Book addBook(Book book) {
 		
-		if (book.getTitle() == null || book.getTitle().isBlank()) {
-	        throw new RuntimeException("Title cannot be null");
-	    }
-		if (book.getAuthor() == null || book.getAuthor().isBlank()) {
-	        throw new RuntimeException("Author cannot be null");
-	    }
+		/*
+		 * if (book.getTitle() == null || book.getTitle().isBlank()) { throw new
+		 * RuntimeException("Title cannot be null"); } if (book.getAuthor() == null ||
+		 * book.getAuthor().isBlank()) { throw new
+		 * RuntimeException("Author cannot be null"); }
+		 */
 		
 		Book b = this.bookRepository.save(book);
 		return b;
