@@ -7,18 +7,19 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -34,8 +35,10 @@ public class EmployeeDTO {
 	@Email(message = "Email should be a valid format")
 	private String email;
 	
-	@NotNull(message ="Age of employee cannot be Null")
-	@Size(min=18 , max = 80 , message = "Age of emplyee between : [18-80]")
+
+	@NotNull(message = "Age of employee cannot be null")
+	@Min(value = 18, message = "Minimum age should be 18")
+	@Max(value = 80, message = "Maximum age should be 80")
 	private Integer age;
 	
 	@PastOrPresent(message="Employee Joining must be past or present")
