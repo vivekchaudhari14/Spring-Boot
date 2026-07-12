@@ -3,6 +3,7 @@ package com.employee.practice.services;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -62,11 +63,12 @@ public class EmployeesService {
 		
 	}
 	
-	public void isExistByEmployeeById(Long EmployeeId) {
-		boolean exist = employeeRepository.existsById(EmployeeId);
-		if(!exist) {
-			throw new ResourceNotFoundException("Employee id Not Found"+EmployeeId);
+	public void isExistByEmployeeById(Long employeeId) {
+		Optional<EmployeeEntity> exist = employeeRepository.findById(employeeId);
+		if (!exist.isPresent()) {
+			throw new ResourceNotFoundException("Employee Id Not found "+employeeId);
 		}
+		
 	}
 
 	public boolean deleteEmployeeById(Long employeeId) {
@@ -76,7 +78,9 @@ public class EmployeesService {
 	}
 
 	public EmployeeDTO updateEmployee(Long id, Map<String, Object> updates) {
-
+		
+		isExistByEmployeeById(id);
+		
 	    EmployeeEntity employee = employeeRepository.findById(id).orElse(null);
 
 	    if (employee == null) {

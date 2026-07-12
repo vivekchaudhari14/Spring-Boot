@@ -2,13 +2,11 @@ package com.employee.practice.controller;
 
 import com.employee.practice.configuration.EmployeeConfig;
 
-import java.lang.foreign.Linker.Option;
-import java.net.http.HttpClient;
+
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,15 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.PutExchange;
-
 import com.employee.practice.dto.EmployeeDTO;
-import com.employee.practice.entities.EmployeeEntity;
 import com.employee.practice.exception.ResourceNotFoundException;
 import com.employee.practice.services.EmployeesService;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -60,7 +53,7 @@ public class EmployeeController {
 		
 		return employeeDto
 				.map(emp -> ResponseEntity.ok(emp))
-				.orElseThrow(() -> new ResourceNotFoundException("Employee Not Found this id" +id));
+				.orElseThrow(() -> new ResourceNotFoundException("Employee Not Found this id "+id));
 		
 	}
 	
