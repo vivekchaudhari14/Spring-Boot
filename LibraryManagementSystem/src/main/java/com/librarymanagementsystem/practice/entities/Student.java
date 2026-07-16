@@ -1,33 +1,32 @@
 package com.librarymanagementsystem.practice.entities;
 
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "books")
+@Table(name = "students")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Title is required")
-    private String title;
+    @NotBlank
+    private String name;
 
-    @NotBlank(message = "Author is required")
-    private String author;
-
-    @NotBlank(message = "Category is required")
-    private String category;
-
+    @Email
     @Column(unique = true)
-    private String isbn;
+    private String email;
 
-    private Boolean available = true;
+    private String mobile;
+
 }
