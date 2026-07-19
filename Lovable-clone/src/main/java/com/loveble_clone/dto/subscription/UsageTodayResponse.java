@@ -1,5 +1,6 @@
 package com.loveble_clone.dto.subscription;
 
-public record UsageTodayResponse(int tokenUsed,int tokenLimit,int previewRunning,int previewLimit) {
+public record UsageTodayResponse(Integer tokenUsed,Integer tokenLimit,
+		Integer previewRunning,Integer previewLimit) {
 
 }

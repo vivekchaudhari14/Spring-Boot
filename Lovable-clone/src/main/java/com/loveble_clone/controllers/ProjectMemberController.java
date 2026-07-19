@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.loveble_clone.dto.ProjectMember;
 import com.loveble_clone.dto.member.InviteMemberRequest;
 import com.loveble_clone.dto.member.MemberResponse;
+import com.loveble_clone.dto.member.UpdateMemberRoleRequest;
 import com.loveble_clone.services.ProjectMemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ProjectMemberController {
 	private final ProjectMemberService projectMemberService;
 	
 	@GetMapping
-	public ResponseEntity<List<ProjectMember>> getProjectMember(@PathVariable Long projectId){
+	public ResponseEntity<List<MemberResponse>> getProjectMember(@PathVariable Long projectId){
 		Long userId = 1L;
 		return ResponseEntity.ok(projectMemberService.getProjectMember(projectId,userId));
 	}
@@ -41,13 +42,13 @@ public class ProjectMemberController {
 	
 	@PatchMapping("{memberId}")
 	public ResponseEntity<MemberResponse> updateMemberRole(@PathVariable Long projectId,
-			@PathVariable Long memberId,@ResponseBody InviteMemberRequest request){
+			@PathVariable Long memberId,@ResponseBody UpdateMemberRoleRequest request){
 		Long userId = 1L;
 		return ResponseEntity.ok(projectMemberService.updateMemberRole(projectId,memberId,request,userId));
 	}
 	
 	@DeleteMapping("{memberId}")
-	public ResponseEntity<MemberResponse> updateMemberRole(@PathVariable Long projectId ,@PathVariable Long memberId){
+	public ResponseEntity<MemberResponse> deleteMember(@PathVariable Long projectId ,@PathVariable Long memberId){
 		Long userId = 1L; 
 		return ResponseEntity.ok(projectMemberService.deleteProjectMember (projectId,memberId,userId));
 	}

@@ -13,6 +13,7 @@ import com.loveble_clone.dto.subscription.CheckoutRequest;
 import com.loveble_clone.dto.subscription.CheckoutResponse;
 import com.loveble_clone.dto.subscription.PlanResponse;
 import com.loveble_clone.dto.subscription.PortalResponse;
+import com.loveble_clone.dto.subscription.SubscripationResponse;
 import com.loveble_clone.services.PlanService;
 import com.loveble_clone.services.SubscripationService;
 

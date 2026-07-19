@@ -1,9 +1,11 @@
 package com.loveble_clone.services;
 
+import com.loveble_clone.dto.auth.UserProfileResponse;
+
 public interface UserService {
 
 
-	userService getProfile(Long userId);
+	UserProfileResponse getProfile(Long userId);
  
 }
  

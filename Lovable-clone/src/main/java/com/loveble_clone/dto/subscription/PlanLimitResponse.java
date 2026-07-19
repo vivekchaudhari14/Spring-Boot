@@ -1,5 +1,6 @@
 package com.loveble_clone.dto.subscription;
 
-public record PlanLimitResponse(String planName, int maxTokenPerDay,int maxProjects,boolean unlimitedAi) {
+public record PlanLimitResponse(String planName, Integer maxTokenPerDay,
+		Integer maxProjects, Boolean unlimitedAi) {
 
 }
