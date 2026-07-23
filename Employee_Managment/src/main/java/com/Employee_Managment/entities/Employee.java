@@ -34,8 +34,6 @@ public class Employee {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
-	    @Column(name = "employee_code", unique = true, nullable = false)
-	    private String employeeCode;
 
 	    @Column(name = "first_name", nullable = false)
 	    private String firstName;

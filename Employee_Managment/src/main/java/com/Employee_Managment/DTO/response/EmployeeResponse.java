@@ -21,7 +21,6 @@ import lombok.experimental.FieldDefaults;
 public class EmployeeResponse {
 	
      Long id;
-     String employeeCode;
      String firstName;
      String surName;
      String email;
